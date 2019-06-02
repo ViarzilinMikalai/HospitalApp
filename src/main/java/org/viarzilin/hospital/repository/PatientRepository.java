@@ -4,4 +4,9 @@ import org.springframework.data.repository.CrudRepository;
 import org.viarzilin.hospital.domain.Patient;
 
 public interface PatientRepository extends CrudRepository<Patient, Long> {
+    Iterable<Patient> findByLastnameStartingWithIgnoreCaseAndFirstnameStartingWithIgnoreCase(
+            String lastname,
+            String firstname
+    );
+
 }
