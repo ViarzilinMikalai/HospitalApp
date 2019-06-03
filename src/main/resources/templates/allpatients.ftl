@@ -10,7 +10,7 @@
                 <input type="text" name="lastnameFilter" value="${lastnameFilter?ifExists}"
                        placeholder="Search by Lastname" class="form-control">
                 <input type="text" name="firstnameFilter" value="${firstnameFilter?ifExists}"
-                       placeholder="Search by Firstname" class="form-control">
+                       placeholder="Search by Firstname" class="form-control ml-2">
                 <button type="submit" class="btn btn-primary ml-2">Search</button>
             </form>
         </div>

@@ -1,6 +1,6 @@
-<#--<#import pager.ftl as p>-->
+<#import "pager.ftl" as p>
 
-<#--<@p.pager url page/>-->
+<@p.pager url page/>
 
     <table class="table table-bordered table-sm">
         <thead class="thead-light">
@@ -13,7 +13,8 @@
         </tr>
         </thead>
         <tbody >
-                <#list patients as patient>
+
+                <#list page.content as patient>
                 <tr>
                     <td>${patient.lastname}</td>
                     <td>${patient.firstname}</td>
@@ -24,4 +25,4 @@
                 </#list>
         </tbody>
     </table>
-<#--</@p.pager url page/>-->
+</@p.pager url page/>

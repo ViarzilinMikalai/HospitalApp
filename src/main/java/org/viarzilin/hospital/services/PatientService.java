@@ -1,6 +1,8 @@
 package org.viarzilin.hospital.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.viarzilin.hospital.domain.Patient;
 import org.viarzilin.hospital.repository.PatientRepository;
@@ -18,15 +20,17 @@ public class PatientService {
     private PatientRepository patientRepository;
 
 
-    public Iterable<Patient> patientList(String lastnameFilter, String firstnameFilter) {
+    public Page<Patient> patientList(String lastnameFilter, String firstnameFilter, Pageable pageable) {
 
         if (lastnameFilter == null && firstnameFilter == null){
 
-            return patientRepository.findAll();
+            return patientRepository.findAll(pageable);
 
         } else {
 
-            return patientRepository.findByLastnameStartingWithIgnoreCaseAndFirstnameStartingWithIgnoreCase(lastnameFilter, firstnameFilter);
+            return patientRepository.findByLastnameStartingWithIgnoreCaseAndFirstnameStartingWithIgnoreCase(
+                    lastnameFilter, firstnameFilter, pageable
+            );
         }
 
     }
