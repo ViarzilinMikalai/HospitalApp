@@ -4,6 +4,7 @@
 
     <div class="collapse <#if patient??>show</#if>" id="collapseExample">
 
+
         <div class="form-group mt-3">
             <form method="post">
                 <div class="form-group">
@@ -43,6 +44,41 @@
                     <#if birthDateError??>
                         <div class="invalid-feedback">
                             ${birthDateError}
+                        </div>
+                    </#if>
+                </div>
+                <div class="form-group">
+                    <input type="text" name="city" placeholder="City"
+                           class="form-control ${(cityError??)?string('is-invalid', '')}"
+                           value="<#if patient.city??>${patient.city}</#if>"/>
+                    <#if cityError??>
+                        <div class="invalid-feedback">
+                            ${cityError}
+                        </div>
+                    </#if>
+                </div>
+                <div class="form-group">
+                    <input type="text" name="street" placeholder="Street"
+                           class="form-control ${(streetError??)?string('is-invalid', '')}"
+                           value="<#if patient.street??>${patient.street}</#if>"/>
+                    <#if streetError??>
+                        <div class="invalid-feedback">
+                            ${streetError}
+                        </div>
+                    </#if>
+                </div>
+                <div class="form-group">
+                    <input type="text" name="building" placeholder="Building"
+                           class="form-control ${(buildingError??)?string('is-invalid', '')}"
+                           value="<#if patient.building??>${patient.building}</#if>"/>
+                </div>
+                <div class="form-group">
+                    <input type="number" name="apartment" placeholder="Apartment"
+                           class="form-control ${(apartmentError??)?string('is-invalid', '')}"
+                           value="<#if patient.apartment??>${patient.apartment}</#if>"/>
+                    <#if apartmentError??>
+                        <div class="invalid-feedback">
+                            ${apartmentError}
                         </div>
                     </#if>
                 </div>

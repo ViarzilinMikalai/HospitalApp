@@ -9,11 +9,15 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.viarzilin.hospital.domain.Patient;
 import org.viarzilin.hospital.services.PatientService;
 
 import javax.validation.Valid;
+import java.time.LocalDate;
 import java.util.Map;
 
 @Controller
@@ -43,7 +47,6 @@ public class PatientController {
             model.addAttribute("birthDates", patient.getBirthDate());
         }
 
-
         return "allpatients";
     }
 
@@ -64,22 +67,35 @@ public class PatientController {
         model.addAttribute ("page", page);
         model.addAttribute("url", "/allpatients");
 
-        if(bindingResult.hasErrors() || birthDate.isEmpty()){
-            if(birthDate.isEmpty()){model.addAttribute("birthDateError", "Please fill the correct date");}
-            else{model.addAttribute("birthDateError", null);}
+        patient.setBirthDate(LocalDate.parse(birthDate));
+
+        if(patientService.findUserByExample(patient) || bindingResult.hasErrors() || birthDate.isEmpty()){
+            if(birthDate.isEmpty()){
+                model.addAttribute("birthDateError", "Please fill the correct date");
+            } else {
+                model.addAttribute("birthDateError", null);
+            }
+
+            if (patientService.findUserByExample(patient)){
+                model.addAttribute("savingReport", "User is Exists");
+            }
+
             Map<String, String> errorsMap = ControllerUtils.getErrors(bindingResult);
             model.mergeAttributes(errorsMap);
             model.addAttribute("patient", patient);
-            model.addAttribute("birthDates", birthDate);
+            model.addAttribute("birthDates", patient.getBirthDate());
 
             return "allpatients";
+
         } else {
-            patientService.save(patient, birthDate);
+
+            patientService.save(patient);
             model.addAttribute("patient", null);
 
             return "redirect:allpatients";
         }
     }
+
 
 
 }

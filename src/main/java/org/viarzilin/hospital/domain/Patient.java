@@ -7,6 +7,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 @Entity
@@ -24,14 +26,13 @@ public class Patient extends AbstractEntity{
     @NotBlank(message = "Please fill the Surname")
     @Length(max = 50, message = "Tag too long (more than 50b)")
     private String surname;
-//    @NotBlank(message = "Please fill the City")
-//    private String city;
-//    @NotBlank(message = "Please fill the Street")
-//    private String street;
-//    @NotBlank(message = "Please fill the Building")
-//    private String building;
-//    @NotBlank(message = "Please fill the Apartment")
-//    private int apartment;
+    @NotBlank(message = "Please fill the City")
+    private String city;
+    @NotBlank(message = "Please fill the Street")
+    private String street;
+    private String building;
+    @NotNull(message = "Please fill the Apartment")
+    private Integer apartment;
 
     @Column(name = "birth_date")
     private LocalDate birthDate;

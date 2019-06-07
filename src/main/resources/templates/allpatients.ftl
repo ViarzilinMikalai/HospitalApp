@@ -15,8 +15,8 @@
             </form>
         </div>
     </div>
-
     <#include "parts/patientList.ftl"/>
+    <#if savingReport??><div class="alert alert-danger" role="alert">${savingReport}</div></#if>
     <#include "parts/patientEditForm.ftl"/>
 
 </@pt.page>
