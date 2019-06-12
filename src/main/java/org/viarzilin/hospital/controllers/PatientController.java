@@ -67,16 +67,18 @@ public class PatientController {
         model.addAttribute ("page", page);
         model.addAttribute("url", "/allpatients");
 
-        patient.setBirthDate(LocalDate.parse(birthDate));
+        if (!birthDate.isEmpty()){
+            patient.setBirthDate(LocalDate.parse(birthDate));
+        }
 
-        if(patientService.findUserByExample(patient) || bindingResult.hasErrors() || birthDate.isEmpty()){
+        if(patientService.findPatientByExample(patient) || bindingResult.hasErrors() || birthDate.isEmpty()){
             if(birthDate.isEmpty()){
                 model.addAttribute("birthDateError", "Please fill the correct date");
             } else {
                 model.addAttribute("birthDateError", null);
             }
 
-            if (patientService.findUserByExample(patient)){
+            if (patientService.findPatientByExample(patient)){
                 model.addAttribute("savingReport", "User is Exists");
             }
 

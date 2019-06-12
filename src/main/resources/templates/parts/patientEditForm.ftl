@@ -40,7 +40,7 @@
                 <div class="form-group">
                     <input type="date" name="birthDates" placeholder="2000-01-23"
                            class="form-control ${(birthDateError??)?string('is-invalid', '')}"
-                           value="<#if patient??>${birthDates}</#if>"/>
+                           value="<#if patient?? && patient.birthDate??>${birthDates}</#if>"/>
                     <#if birthDateError??>
                         <div class="invalid-feedback">
                             ${birthDateError}
@@ -50,7 +50,7 @@
                 <div class="form-group">
                     <input type="text" name="city" placeholder="City"
                            class="form-control ${(cityError??)?string('is-invalid', '')}"
-                           value="<#if patient.city??>${patient.city}</#if>"/>
+                           value="<#if patient?? && patient.city??>${patient.city}</#if>"/>
                     <#if cityError??>
                         <div class="invalid-feedback">
                             ${cityError}
@@ -60,7 +60,7 @@
                 <div class="form-group">
                     <input type="text" name="street" placeholder="Street"
                            class="form-control ${(streetError??)?string('is-invalid', '')}"
-                           value="<#if patient.street??>${patient.street}</#if>"/>
+                           value="<#if patient?? && patient.street??>${patient.street}</#if>"/>
                     <#if streetError??>
                         <div class="invalid-feedback">
                             ${streetError}
@@ -70,12 +70,12 @@
                 <div class="form-group">
                     <input type="text" name="building" placeholder="Building"
                            class="form-control ${(buildingError??)?string('is-invalid', '')}"
-                           value="<#if patient.building??>${patient.building}</#if>"/>
+                           value="<#if patient?? &&  patient.building??>${patient.building}</#if>"/>
                 </div>
                 <div class="form-group">
                     <input type="number" name="apartment" placeholder="Apartment"
                            class="form-control ${(apartmentError??)?string('is-invalid', '')}"
-                           value="<#if patient.apartment??>${patient.apartment}</#if>"/>
+                           value="<#if patient?? &&  patient.apartment??>${patient.apartment}</#if>"/>
                     <#if apartmentError??>
                         <div class="invalid-feedback">
                             ${apartmentError}
@@ -87,7 +87,7 @@
                         <#if !patient??>
                             Create Patient
                         <#else>
-                            Save Patient
+                            Update Patient
                         </#if>
                     </button>
                 </div>

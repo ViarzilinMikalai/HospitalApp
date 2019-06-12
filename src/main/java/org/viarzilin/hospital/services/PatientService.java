@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import org.viarzilin.hospital.domain.Patient;
 import org.viarzilin.hospital.repository.PatientRepository;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
@@ -47,7 +46,7 @@ public class PatientService {
     }
 
 
-    public boolean findUserByExample(Patient patient) {
+    public boolean findPatientByExample(Patient patient) {
 
         Example<Patient> patientExample = Example.of(patient);
         Optional<Patient> actual = patientRepository.findOne(patientExample);
