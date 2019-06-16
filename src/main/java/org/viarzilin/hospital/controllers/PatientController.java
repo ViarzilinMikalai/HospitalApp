@@ -35,7 +35,7 @@ public class PatientController {
             Model model,
             @RequestParam(value = "patient", required = false) Patient patient,
             @PageableDefault(sort = {"lastname"}, direction = Sort.Direction.ASC) Pageable pageable
-        ){
+    ){
         Page<Patient> page = patientService.patientList(lastnameFilter, firstnameFilter, pageable);
         model.addAttribute ("page", page);
         model.addAttribute("url", "/allpatients");
@@ -49,7 +49,6 @@ public class PatientController {
 
         return "allpatients";
     }
-
 
 
     /**Save new Patient or update exists Patient*/
@@ -79,7 +78,7 @@ public class PatientController {
             }
 
             if (patientService.findPatientByExample(patient)){
-                model.addAttribute("savingReport", "User is Exists");
+                model.addAttribute("savingReport", "Patient is Exists");
             }
 
             Map<String, String> errorsMap = ControllerUtils.getErrors(bindingResult);

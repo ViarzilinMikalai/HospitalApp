@@ -1,7 +1,7 @@
 package org.viarzilin.hospital.domain;
 
 import lombok.Data;
-import org.hibernate.validator.constraints.Length;
+import org.viarzilin.hospital.domain.abstractClasses.AbstractUser;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,20 +14,7 @@ import java.time.LocalDate;
 @Entity
 @Table(name="patient")
 @Data
-public class Patient extends AbstractEntity{
-
-
-    @NotBlank(message = "Please fill the Lastname")
-    @Length(max = 50, message = "Tag too long (more than 50b)")
-    private String lastname;
-
-    @NotBlank(message = "Please fill the Firstname")
-    @Length(max = 50, message = "Tag too long (more than 50b)")
-    private String firstname;
-
-    @NotBlank(message = "Please fill the Surname")
-    @Length(max = 50, message = "Tag too long (more than 50b)")
-    private String surname;
+public class Patient extends AbstractUser {
 
     @NotBlank(message = "Please fill the City")
     private String city;
@@ -43,6 +30,5 @@ public class Patient extends AbstractEntity{
 
     @Column(name = "birth_date")
     private LocalDate birthDate;
-
 
 }
