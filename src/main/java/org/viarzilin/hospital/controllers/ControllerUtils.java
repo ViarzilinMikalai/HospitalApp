@@ -1,9 +1,7 @@
 package org.viarzilin.hospital.controllers;
 
-import org.springframework.data.domain.Page;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.viarzilin.hospital.domain.Patient;
 
 import java.util.Map;
 import java.util.stream.Collector;

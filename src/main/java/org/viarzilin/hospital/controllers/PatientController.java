@@ -21,7 +21,7 @@ import java.time.LocalDate;
 import java.util.Map;
 
 @Controller
-@RequestMapping("/allpatients")
+@RequestMapping("/patients")
 public class PatientController {
 
     @Autowired
@@ -33,12 +33,23 @@ public class PatientController {
             @RequestParam(required = false, defaultValue = "") String lastnameFilter,
             @RequestParam(required = false, defaultValue = "") String firstnameFilter,
             Model model,
+            @RequestParam(required = false, defaultValue = "") Patient removePatient,
+            @RequestParam(required = false, defaultValue = "") Patient reparePatient,
             @RequestParam(value = "patient", required = false) Patient patient,
             @PageableDefault(sort = {"lastname"}, direction = Sort.Direction.ASC) Pageable pageable
     ){
+
+        if (removePatient != null){
+            patientService.remove(removePatient);
+        }
+
+        if (reparePatient != null){
+            patientService.repare(reparePatient);
+        }
+
         Page<Patient> page = patientService.patientList(lastnameFilter, firstnameFilter, pageable);
         model.addAttribute ("page", page);
-        model.addAttribute("url", "/allpatients");
+        model.addAttribute("url", "/patients");
         model.addAttribute("lastnameFilter", lastnameFilter);
         model.addAttribute("firstnameFilter", firstnameFilter);
 
@@ -47,13 +58,13 @@ public class PatientController {
             model.addAttribute("birthDates", patient.getBirthDate());
         }
 
-        return "allpatients";
+        return "patients";
     }
 
 
     /**Save new Patient or update exists Patient*/
     @PostMapping
-    public String addAndUpdatePatient(
+    public String addOrUpdatePatient(
             @Valid Patient patient,
             BindingResult bindingResult,
             Model model,
@@ -64,7 +75,7 @@ public class PatientController {
         String firstnameFilter = null;
         Page<Patient> page = patientService.patientList(lastnameFilter, firstnameFilter, pageable);
         model.addAttribute ("page", page);
-        model.addAttribute("url", "/allpatients");
+        model.addAttribute("url", "/patients");
 
         if (!birthDate.isEmpty()){
             patient.setBirthDate(LocalDate.parse(birthDate));
@@ -86,17 +97,15 @@ public class PatientController {
             model.addAttribute("patient", patient);
             model.addAttribute("birthDates", patient.getBirthDate());
 
-            return "allpatients";
+            return "patients";
 
         } else {
 
             patientService.save(patient);
             model.addAttribute("patient", null);
 
-            return "redirect:allpatients";
+            return "redirect:patients";
         }
     }
-
-
 
 }

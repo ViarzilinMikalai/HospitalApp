@@ -12,12 +12,13 @@
             <th scope="col">Дата рождения</th>
             <th scope="col">Адрес</th>
             <th scope="col"></th>
+            <th scope="col"></th>
         </tr>
         </thead>
         <tbody >
 
                 <#list page.content as patient>
-                <tr>
+                <tr ${patient.deleted?then('class="table-danger"', '')}>
                     <td>${patient.lastname}</td>
                     <td>${patient.firstname}</td>
                     <td>${patient.surname}</td>
@@ -25,11 +26,16 @@
                     <td>
                         <#if patient.city??>${patient.city},</#if>
                         <#if patient.street??>${patient.street},</#if>
-                        <#if patient.building??>${patient.building},</#if>
-                        <#if patient.apartment??>${patient.apartment},</#if>
+                        <#if patient.apartment??>${patient.apartment}</#if>
+                        <#if patient.building??>${patient.building}</#if>
                     </td>
 
-                    <td><a href="/allpatients?patient=${patient.id}">edit</a></td>
+                    <td>
+                    <#--${patient.deleted?then('true', 'false')}-->
+                        ${patient.deleted?then('<a href="/patients?reparePatient=${patient.id}">Repare</a>',
+                        '<a href="/patients?removePatient=${patient.id}">Delete</a>')}
+                    </td>
+                    <td><a href="/patients?patient=${patient.id}">edit</a></td>
                 </tr>
                 </#list>
         </tbody>

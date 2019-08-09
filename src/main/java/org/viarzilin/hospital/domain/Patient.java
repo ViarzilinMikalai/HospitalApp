@@ -1,10 +1,12 @@
 package org.viarzilin.hospital.domain;
 
 import lombok.Data;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.viarzilin.hospital.domain.abstractClasses.AbstractUser;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.Table;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
@@ -12,6 +14,7 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 @Table(name="patient")
 @Data
 public class Patient extends AbstractUser {

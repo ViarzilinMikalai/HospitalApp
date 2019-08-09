@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import org.viarzilin.hospital.domain.Patient;
 import org.viarzilin.hospital.repository.PatientRepository;
 
-import java.time.LocalDateTime;
 import java.util.Optional;
 
 
@@ -35,15 +34,15 @@ public class PatientService {
     }
 
     public void save(Patient patient) {
-
+/*
         if (patient.getCreatedDate() == null){
             patient.setCreatedDate(LocalDateTime.now());
         }
-        patient.setUpdatedDate(LocalDateTime.now());
+        patient.setUpdatedDate(LocalDateTime.now());*/
 
         patientRepository.save(patient);
-
     }
+
 
 
     public boolean findPatientByExample(Patient patient) {
@@ -54,4 +53,13 @@ public class PatientService {
         return actual.isPresent();
     }
 
+    public void remove(Patient patient) {
+        patient.setDeleted(true);
+        patientRepository.save(patient);
+    }
+
+    public void repare(Patient patient) {
+        patient.setDeleted(false);
+        patientRepository.save(patient);
+    }
 }
