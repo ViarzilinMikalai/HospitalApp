@@ -17,6 +17,6 @@ import javax.validation.constraints.NotBlank;
 public class Department extends AbstractEntity{
 
     @NotBlank(message = "Please fill the department")
-    @Column(name = "name", unique = true)
+    @Column(name = "name")
     private String name;
 }

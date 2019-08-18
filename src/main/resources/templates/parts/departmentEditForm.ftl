@@ -3,8 +3,6 @@
 </a>
 
     <div class="collapse <#if department??>show</#if>" id="collapseExample">
-
-
         <div class="form-group mt-3">
             <form method="post">
                 <div class="form-group">
@@ -22,7 +20,12 @@
                         <#if !department??>
                             Create department
                         <#else>
-                            Update department
+                            <#if department.id??>
+                                Update department
+                            </#if>
+                            <#if !department.id??>
+                                Create department
+                            </#if>
                         </#if>
                     </button>
                 </div>

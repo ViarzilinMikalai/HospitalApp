@@ -81,15 +81,15 @@ public class PatientController {
             patient.setBirthDate(LocalDate.parse(birthDate));
         }
 
-        if(patientService.findPatientByExample(patient) || bindingResult.hasErrors() || birthDate.isEmpty()){
-            if(birthDate.isEmpty()){
-                model.addAttribute("birthDateError", "Please fill the correct date");
-            } else {
-                model.addAttribute("birthDateError", null);
-            }
+        if(bindingResult.hasErrors() || birthDate.isEmpty()){
 
-            if (patientService.findPatientByExample(patient)){
-                model.addAttribute("savingReport", "Patient is Exists");
+            if(birthDate.isEmpty()){
+
+                model.addAttribute("birthDateError", "Please fill the correct date");
+
+            } else {
+
+                model.addAttribute("birthDateError", null);
             }
 
             Map<String, String> errorsMap = ControllerUtils.getErrors(bindingResult);
@@ -101,11 +101,17 @@ public class PatientController {
 
         } else {
 
-            patientService.save(patient);
-            model.addAttribute("patient", null);
+            if (!patientService.save(patient)){
 
-            return "redirect:patients";
+                model.addAttribute("savingReport", "Patient is Exists");
+                return "patients";
+
+            } else {
+
+                model.addAttribute("patient", null);
+                return "redirect:patients";
+
+            }
         }
     }
-
 }

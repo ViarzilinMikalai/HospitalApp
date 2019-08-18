@@ -33,30 +33,33 @@ public class PatientService {
 
     }
 
-    public void save(Patient patient) {
+    public boolean save(Patient patient) {
 /*
         if (patient.getCreatedDate() == null){
             patient.setCreatedDate(LocalDateTime.now());
         }
         patient.setUpdatedDate(LocalDateTime.now());*/
 
-        patientRepository.save(patient);
-    }
-
-
-
-    public boolean findPatientByExample(Patient patient) {
-
         Example<Patient> patientExample = Example.of(patient);
         Optional<Patient> actual = patientRepository.findOne(patientExample);
 
-        return actual.isPresent();
+        if (actual.isPresent()){
+
+            return false;
+
+        } else {
+
+            patientRepository.save(patient);
+            return true;
+        }
     }
+
 
     public void remove(Patient patient) {
         patient.setDeleted(true);
         patientRepository.save(patient);
     }
+
 
     public void repare(Patient patient) {
         patient.setDeleted(false);

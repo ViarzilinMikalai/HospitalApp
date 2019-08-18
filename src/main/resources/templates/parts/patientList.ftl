@@ -22,7 +22,7 @@
                     <td>${patient.lastname}</td>
                     <td>${patient.firstname}</td>
                     <td>${patient.surname}</td>
-                    <td>${patient.birthDate}</td>
+                    <td><#if patient.birthDate??>${patient.birthDate}</#if></td>
                     <td>
                         <#if patient.city??>${patient.city},</#if>
                         <#if patient.street??>${patient.street},</#if>
@@ -31,7 +31,6 @@
                     </td>
 
                     <td>
-                    <#--${patient.deleted?then('true', 'false')}-->
                         ${patient.deleted?then('<a href="/patients?reparePatient=${patient.id}">Repare</a>',
                         '<a href="/patients?removePatient=${patient.id}">Delete</a>')}
                     </td>

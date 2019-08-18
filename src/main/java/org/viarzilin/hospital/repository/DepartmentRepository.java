@@ -6,5 +6,6 @@ import org.viarzilin.hospital.domain.Department;
 
 public interface DepartmentRepository extends CrudRepository<Department, Long>, QueryByExampleExecutor<Department> {
 
+    Department findByNameIgnoreCase(String name);
 
 }

@@ -4,7 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.viarzilin.hospital.domain.Department;
 import org.viarzilin.hospital.services.DepartmentService;
 
@@ -35,7 +38,7 @@ public class DepartmentController {
         }
 
         if (department != null){
-            model.addAttribute("department", department);
+            model.addAttribute("department", new Department());
         }
 
         List<Department> departmentsList = departmentService.findAll();
@@ -53,26 +56,28 @@ public class DepartmentController {
     ){
         List<Department> departmentsList = departmentService.findAll();
         model.addAttribute("departmentsList", departmentsList);
+        model.addAttribute("department", department);
 
-        if(departmentService.findByExample(department) || bindingResult.hasErrors()){
-
-            if (departmentService.findByExample(department)){
-                model.addAttribute("savingReport", "Department is Exists");
-            }
+        if(bindingResult.hasErrors()){
 
             Map<String, String> errorsMap = ControllerUtils.getErrors(bindingResult);
             model.mergeAttributes(errorsMap);
-            model.addAttribute("department", department);
 
             return "departments";
+
         } else {
 
-            departmentService.saveDepartment(department);
-            model.addAttribute("department", null);
+            if (!departmentService.saveDepartment(department)){
 
+                model.addAttribute("savingReport", "Department is Exists");
+                return "departments";
+
+            } else {
+
+                return "redirect:departments";
+            }
         }
 
-        return "redirect:departments";
     }
 
 }
