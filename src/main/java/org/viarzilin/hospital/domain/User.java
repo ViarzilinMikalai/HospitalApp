@@ -1,18 +1,32 @@
 package org.viarzilin.hospital.domain;
 
 import lombok.Data;
-import org.viarzilin.hospital.domain.abstractClasses.AbstractUser;
+import org.viarzilin.hospital.domain.abstractClasses.AbstractEntity;
 import org.viarzilin.hospital.domain.enums.UserRoles;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
-@Table(name="user_table")
+@Table(name="usr")
 @Data
-public class User extends AbstractUser {
+public class User extends AbstractEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long Id;
+
+    @NotBlank(message = "Please fill the Lastname")
+    private String lastname;
+
+    @NotBlank(message = "Please fill the Firstname")
+    private String firstname;
+
+    @NotBlank(message = "Please fill the Surname")
+    private String surname;
 
     @NotNull(message = "Please fill the Username")
     @Column(name = "username", updatable = false, unique = true)

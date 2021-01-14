@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="parts/fragments.html :: head">
+    </head>
+<body>
+    <div class="container mt-5">
+        <h1>Hospital</h1>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <form class="form-inline">
+                    <input type="text" name="lastnameFilter" th:value="${lastnameFilter}"
+                           placeholder="Search by Lastname" class="form-control">
+                    <input type="text" name="firstnameFilter" th:value="${firstnameFilter}"
+                           placeholder="Search by Firstname" class="form-control ml-2">
+                    <button type="submit" class="btn btn-primary ml-2">Search</button>
+                </form>
+            </div>
+        </div>
+        <div th:replace="parts/patientParts.html :: patientList"></div>
+        <div th:replace="parts/pager.html :: pager"></div>
+        <div th:replace="parts/patientParts.html :: patientForm"></div>
+        <div th:replace="parts/fragments.html :: footer"></div>
+    </div>
+</body>
+</html>

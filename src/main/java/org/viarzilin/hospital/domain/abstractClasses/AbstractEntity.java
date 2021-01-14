@@ -13,11 +13,7 @@ import java.time.LocalDateTime;
 @EntityListeners(AuditingEntityListener.class)
 @Data
 public abstract class AbstractEntity  {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long Id;
-
+    
     @CreatedDate
     @Column(name = "created_date", updatable = false)
     private LocalDateTime createdDate;

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div th:fragment="pager" class="container mt-3">
+        <div class="row">
+            <th:block th:with="totalPages = ${page.getTotalPages()}">
+                <th:block th:with="body = ${totalPages <= 7} ? ${#numbers.sequence(1, totalPages)} : ${bodyForPager}">
+                    <ul class="pagination col justify-content-center">
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#" tabindex="-1">Страницы</a>
+                        </li>
+                        <th:block th:each="p : ${body}">
+                            <th:block th:if="${p - 1} == ${page.getNumber}">
+                                <li class="page-item active">
+                                    <a class="page-link" href="#" tabindex="-1">
+                                        <th:block th:utext="${p}"></th:block>
+                                    </a>
+                                </li>
+                            </th:block>
+                            <th:block th:if="${p} == -1">
+                                <li class="page-item disabled">
+                                    <a class="page-link" href="#" tabindex="-1">...</a>
+                                </li>
+                            </th:block>
+                            <th:block th:if="${p - 1} != ${page.getNumber} and ${p} != -1">
+                                <li class="page-item">
+                                    <a class="page-link" th:href="@{{url}?page={page}&size={size}(url=${url},page=${p - 1},size=${page.getSize()})}" tabindex="-1" th:text="${p}"></a>
+                                </li>
+                            </th:block>
+                        </th:block>
+                    </ul>
+                </th:block>
+            </th:block>
+            <ul class="pagination col justify-content-center">
+                <li class="page-item disabled">
+                    <a class="page-link" href="#" tabindex="-1">Элементов на странице</a>
+                </li>
+                <th:block th:with="cPages = ${ {5,10,25,50} }">
+                    <th:block th:each="c : ${cPages}">
+                        <th:block th:if="${c} == ${page.getSize()}">
+                            <li class="page-item active">
+                                <a class="page-link" href="#" tabindex="-1">
+                                    <th:block th:utext="${c}"></th:block>
+                                </a>
+                            </li>
+                        </th:block>
+                        <th:block th:if="${c} != ${page.getSize()}">
+                            <li class="page-item">
+                                <a class="page-link" th:href="@{{url}?page={page}&size={size}(url=${url},page=${page.getNumber()},size=${c})}">
+                                    <th:block th:utext="${c}"></th:block>
+                                </a>
+                            </li>
+                        </th:block>
+                    </th:block>
+                </th:block>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml" lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+    </head>
+    <body>
+        <table th:fragment="patientList" class="table table-bordered table-sm">
+            <thead class="thead-light">
+            <tr>
+                <th scope="col">Фамилия </th>
+                <th scope="col">Имя</th>
+                <th scope="col">Отчество</th>
+                <th scope="col">Дата рождения</th>
+                <th scope="col">Адрес</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr th:each="patient:${page.content}" th:class="${patient.deleted} ? table-danger">
+                    <td th:text="${patient.lastname}"></td>
+                    <td th:text="${patient.firstname}"></td>
+                    <td th:text="${patient.surname}"></td>
+                    <td th:text="${patient.birthDate}"></td>
+                    <td th:text="
+                        ${patient.city} + ', ' +
+                        ${patient.street} + ', ' +
+                        ${patient.building} + ', ' +
+                        ${patient.apartment}"
+                    >
+                    </td>
+                    <td >
+                        <a  th:href="@{/patients(removePatient=${patient.id})}" >
+                            <span th:text="${patient.deleted == false} ? 'Delete' : 'Repair'" ></span>
+                        </a>
+                    </td>
+                    <td>
+                        <a  th:href="@{/patients/{id}/edit(id=${patient.id})}">
+                            Edit
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div th:fragment="patientForm">
+            <a th:if="${patient.firstname == null}" class="btn btn-primary mb-3" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                Patient editor
+            </a>
+            <div th:class="${patient.firstname != null} ? 'collapse show' : 'collapse'" id="collapseExample">
+
+                <h2 th:text="${patient.firstname != null} ? 'Edit Patient' : 'Add new Patient'"></h2>
+                <div class="form-group mt-3">
+                    <form method="post" th:object="${patient}">
+                        <div class="form-group">
+                            <input type="text" placeholder="Lastname" class="form-control"
+                                th:errorclass="is-invalid" th:field="*{lastname}"/>
+                            <p th:if="${#fields.hasErrors('lastname')}" th:errors="*{lastname}"></p>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" placeholder="Firstname" class="form-control"
+                                th:errorclass="is-invalid" th:field="*{firstname}"/>
+                            <p th:if="${#fields.hasErrors('firstname')}" th:errors="*{firstname}"></p>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" placeholder="Surname" class="form-control"
+                                   th:errorclass="is-invalid" th:field="*{surname}"/>
+                            <p th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}"></p>
+                        </div>
+                        <div class="form-group">
+                            <input type="date" placeholder="2000-01-23" class="form-control"
+                                   th:errorclass="is-invalid" th:field="*{birthDate}"/>
+                            <p th:if="${#fields.hasErrors('birthDate')}" th:errors="*{birthDate}"></p>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" placeholder="City" class="form-control"
+                                   th:errorclass="is-invalid" th:field="*{city}"/>
+                            <p th:if="${#fields.hasErrors('city')}" th:errors="*{city}"></p>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" placeholder="Street" class="form-control"
+                                   th:errorclass="is-invalid" th:field="*{street}"/>
+                            <p th:if="${#fields.hasErrors('street')}" th:errors="*{street}"></p>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" placeholder="Building" class="form-control"
+                                   th:errorclass="is-invalid" th:field="*{building}"/>
+                            <p th:if="${#fields.hasErrors('building')}" th:errors="*{building}"></p>
+                        </div>
+                        <div class="form-group">
+                            <input type="number" placeholder="Apartment" class="form-control"
+                                   th:errorclass="is-invalid" th:field="*{apartment}"/>
+                            <p th:if="${#fields.hasErrors('apartment')}" th:errors="*{apartment}"></p>
+                        </div>
+                        <div class="form-group mt-2">
+                            <input type="submit" class="btn btn-primary" th:value="${patient.lastname == null} ? 'Save' : 'Edit'">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
